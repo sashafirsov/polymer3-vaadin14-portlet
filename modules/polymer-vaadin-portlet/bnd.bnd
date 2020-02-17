@@ -1,0 +1,4 @@
+Bundle-Name: polymer-vaadin-portlet
+Bundle-SymbolicName: com.simulationworks.pv
+Bundle-Version: 1.0.0
+Export-Package: com.simulationworks.pv.constants
