@@ -1,8 +1,35 @@
 {
   "npm": true,
-  "lint": {
-    "rules": [
-      "polymer-3"
-    ]
-  }
+  "entrypoint": "index.html",
+  "shell": "webcomponents-element.js",
+  "extraDependencies": [
+    "node_modules/@webcomponents/webcomponentsjs/**",
+    "node_modules/@babel/polyfill/dist/**",
+    "node_modules/web-animations-js/*.js"
+  ],
+  "builds": [
+    {
+      "name": "esm-unbundled",
+      "basePath": "/o/polymer-vaadin-portlet/webcomponents/build/esm-unbundled",
+      "browserCapabilities": [
+        "es2015",
+        "modules",
+        "push"
+      ],
+      "js": {
+        "minify": false,
+        "compile": "es2015",
+        "transformModulesToAmd": false
+      },
+      "css" : {"minify": true },
+      "html": {"minify": true },
+      "bundle": false,
+      "addServiceWorker": false,
+      "addPushManifest": true,
+      "preset": "es6-unbundled"
+    },
+    { "preset": "es5-bundled","addServiceWorker": false,
+      "basePath": "/o/polymer-vaadin-portlet/webcomponents/build/es5-bundled"
+    }
+  ]
 }

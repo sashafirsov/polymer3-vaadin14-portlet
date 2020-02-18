@@ -1,3 +1,4 @@
+import org.apache.tools.ant.taskdefs.condition.Os
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
@@ -5,4 +6,41 @@ dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"
 	compileOnly group: "jstl", name: "jstl"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+}
+transpileJS.enabled = false
+sourceSets.main.resources {
+	srcDirs = ["src/main/java","src/main/resources"]
+	exclude "**/webcomponents/node_modules"
+	include "**/*.*"
+}
+def  npm = (Os.isFamily(Os.FAMILY_WINDOWS))? 'npm.cmd': 'npm'
+def workDirStr = 'src/main/resources/META-INF/resources/webcomponents'
+
+task npmClean_polymer(type: Delete) {
+	delete workDirStr+'/node_modules'
+	delete workDirStr+'/build'
+}
+task npmInstall_polymer(type: Exec) {
+	def folder = new File( workDirStr+'/node_modules/@polymer' )
+	workingDir workDirStr
+	if( folder.isDirectory()  )
+		commandLine 'echo', 'skipping npm install'
+	else
+		commandLine npm, 'install', '--only=prod'
+}
+task npmBuild(type: Exec) {
+	workingDir workDirStr
+	commandLine npm, 'run', 'build'
+}
+
+npmBuild {
+	dependsOn npmInstall_polymer
+}
+
+clean {
+	dependsOn npmClean_polymer
+}
+
+processResources {
+	dependsOn npmBuild
 }
