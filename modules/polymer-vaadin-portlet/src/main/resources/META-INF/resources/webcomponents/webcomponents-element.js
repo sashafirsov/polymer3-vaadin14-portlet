@@ -16,39 +16,19 @@ class WebcomponentsElement extends PolymerElement {
   :host { display: block; }
 </style>
 <h2>Available collections</h2>
-<iron-ajax auto
-    url="/o/polymer-vaadin-portlet/webcomponents/package.json" 
-    handle-as="json"
-    last-response="{{package}}"
-    on-response="onPackageReady"
-></iron-ajax>
-<template is="dom-repeat" items="[[keys(package.dependencies)]]" as="pkg">
-    <div>   [[pkg]] 
-            [[ rev(pkg) ]]  
-            &lt;load-[[ mod(pkg) ]] &gt;
-            <div inner-h-t-m-l="<load-[[mod(pkg)]]></load-[[mod(pkg)]]>"></div> 
-    </div>    
+To hide component UI, set css rule to 
+<pre>
+    webcomponents-element{ display: none; }
+</pre>
+<template is="dom-repeat" items="[[dependencies]]" as="pkg">
+    <hr/>
+    <div inner-h-t-m-l="<[[pkg]]></[[pkg]]>"></div>
 </template>
     `;
   }
   static get properties() {
-    return {
-      prop1: {
-        type: String,
-        value: 'webcomponents-element',
-      },
-    };
+    return { dependencies: { type: Array, value:["load-iron-elements"] }    };
   }
-
-  onPackageReady()
-  {
-    // for( let pkg in this.package.dependencies )
-    //       import(`/o/polymer-vaadin-portlet/webcomponents/build/esm-unbundled/node_modules/${pkg}`)
-  }
-
-  keys(obj){ return Object.keys(obj) }
-  mod(pkg){ return pkg.split('/').pop() }
-  rev( pkg ){return this.package.dependencies[pkg] }
 }
 
 window.customElements.define('webcomponents-element', WebcomponentsElement);
