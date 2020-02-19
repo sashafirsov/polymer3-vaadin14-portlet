@@ -16,7 +16,6 @@ class LoadIronElement extends LoadCollection
     {   super.ready();
         if( !this.enabled )
             return this.msg = "disabled";
-        this.msg = "loading";
         const errback = err => console.error( this.msg+=" load error "+err, err );
 
 //      if( this.isEnabled("@polymer/iron-a11y-announcer"                 ) ) import("@polymer/iron-a11y-announcer"           ).catch(errback);
