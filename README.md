@@ -1,29 +1,33 @@
+[GIT](https://github.com/sashafirsov/polymer3-vaadin14-portlet)
 # polymer3-vaadin14-portlet
-portlet to serve web components from Polymer Elements and Vaadin deployed as osgi module to be used in independently deployed UI without the need for embedding web components.
+A portlet to serve Polymer and Vaadin web components from deployed osgi module. 
+It would be reused by independently deployed portlets UI without the need for embedding web components within each portlet.
 
 # Goal
-* provide reusable across portal unbundled build of web components set
+* provide reusable across portal unbundled build of web components sets
 * Configurable loading of es6 modules for LR page. 
 * convenience tools for module/web component info & preview.
 
-# Loader ui 
-* dependencies list
-* for each dependency
-  * "enabled" portlet config flag. Config def list comes from 
-  * enabled mark
-  * dependencies WC UI.
+# Use instructions
+TODO
 
-Post install script 
+# implementation notes
+## Loader ui 
+* WC collections list
+* for each collection
+  * "enabled" attribute on collection level. 
+  * list of collection elements
+  * "enabled" flag for each element.
 
-* generate set of WC into /build from [package.json].dependencies 
-
- WC 
-* name and tag is `loader-${ dep.package}-${dep.name}
-
-* ready() with dynamic imports from own [package.json].dependencies 
-* ui lists 
+Collection WC 
+* load- prefix for tag & module
+* loads dependencies lazily via `import()`
+* ui shows: 
   * dependencies, 
-  * revisions, 
-  * html snippet with tag name to copy, 
-  * html live tag.
+  * revisions ( from `package-lock.json` ) 
+  * html live tag for dependency.
   * help/docs link
+  * `enabled` checkbox
+Actual dependencies are added manually into `package.json` and hardcoded in load-XXX collection component.
+
+Enabled dependencies are added to `dependencies` csv attribute, which if passed via html would trigger modules load.
