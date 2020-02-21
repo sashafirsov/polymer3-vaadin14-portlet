@@ -11,23 +11,29 @@ It would be reused by independently deployed portlets UI without the need for em
 # Use instructions
 TODO
 
-# implementation notes
-## Loader ui 
-* WC collections list
+# Implementation notes
+## Loader ui - webcomponents-element
+Shows WC collections to check the dependencies in collection to be loaded 
 * for each collection
   * "enabled" attribute on collection level. 
   * list of collection elements
-  * "enabled" flag for each element.
+  * "enabled" flag for each element within collection.
+Attributes
+* `selection`- dependencies csv to be loaded, added when dependency module is checked. 
+    A subject to serialise in portal as portlet property.
+* `disabled` - makes UI read-only
+* `loadonly` - no UI, just load dependencies from config 
 
-Collection WC 
-* load- prefix for tag & module
+## Collection WC 
+( load- prefix for tag & module )
+
 * loads dependencies lazily via `import()`
 * ui shows: 
   * dependencies, 
   * revisions ( from `package-lock.json` ) 
   * html live tag for dependency.
   * help/docs link
-  * `enabled` checkbox
+  * `active` checkbox
 Actual dependencies are added manually into `package.json` and hardcoded in load-XXX collection component.
 
-Enabled dependencies are added to `dependencies` csv attribute, which if passed via html would trigger modules load.
+"active" dependencies are added to `dependencies` csv attribute, which if passed via html would trigger modules load.

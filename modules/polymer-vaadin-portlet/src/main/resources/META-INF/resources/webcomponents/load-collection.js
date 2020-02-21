@@ -1,4 +1,5 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import { wrap } from "@polymer/polymer/lib/utils/wrap";
 
 /**
  * `load-iron-elements`
@@ -14,6 +15,7 @@ LoadCollection extends PolymerElement
     constructor()
     {   super();
         this.dependencies=[];
+        this.wcRoot= location.port==="8081" ? '' : '/o/polymer-vaadin-portlet/webcomponents';
     }
 
     static get template()
@@ -27,30 +29,58 @@ LoadCollection extends PolymerElement
             <details>      
                 <summary>&lt;[[getTag()]]&gt;</summary>     
                 <iron-ajax auto
-                    ZZurl="/package-lock.json" 
-                    url="/o/polymer-vaadin-portlet/webcomponents/package-lock.json" 
+                    url="[[wcRoot]]/package-lock.json" 
                     handle-as="json"
                     last-response="{{packages}}"
                 ></iron-ajax>
                 <template is="dom-repeat" items="[[dependencies]]" as="pkg">
-                    <div>   <a href="https://www.webcomponents.org/element/[[ pkg ]]">[[pkg]]</a>
-                            [[ rev(pkg,packages) ]]
-                            <div inner-h-t-m-l="<[[mod(pkg)]]></[[mod(pkg)]]>"></div> 
+                    <div>
+                    
+                       <input type="checkbox" [[disabled]] on-change="onSelect" id="cb-[[ pkg.name ]]"
+                        checked="{{ pkg.active }}"                         
+                        />
+                       <a href="https://www.webcomponents.org/element/[[ pkg.name ]]">[[pkg.name]]</a>
+                            [[ rev(pkg.name,packages) ]]
+                            <div inner-h-t-m-l="<[[pkg.tag]]></[[pkg.tag]]>"></div> 
                     </div>    
                 </template> 
             </details>          
-        </fieldset>     
+        </fieldset>           
       `;
     }
-    // static get is(){ return 'load-collection'}
+    static get is(){ return 'load-collection'}
     static get properties()
     {
-        return { enabled: { type: Boolean, value: true }, dependencies: Array };
+        return { disabled: String, dependencies: Array, selection:{type:String, notify:true}, active:{ type:Boolean, value:true } };
     }
-    initModule( pkg ){ this.dependencies.push(pkg); return true;}
+    ready()
+    {   super.ready();
+        if( !this.active )
+            return this.msg = "inactive";
+        this.msg = "";
+        this.initDependencies();
+    }
+    getSelection(){ return this.dependencies && this.dependencies.filter( p=>p.active ).map(p=>p.name).join(",") }
+
+    onSelect(ev)
+    {
+        this.dependencies.find(d=>d.name===ev.target.id.substring(3)).active = ev.target.checked
+        this.set("selection",this.dependencies.filter( p=>p.active ).map(p=>p.name).join(",") );
+    }
+
+    initDependencies()
+    {   // override to load collection dependencies
+        // if( this.initModule("@polymer/iron-ajax"                     ) ) import("@polymer/iron-ajax"                     ).catch(errback);
+    }
+    initModule( pkg )
+    {   let active =  this.checkedAttr(pkg);
+        this.dependencies.push({ name:pkg,active, tag:pkg.split('/').pop() });
+        return active;
+    }
+    checkedAttr(pkg){ return ( this.selection ==='all' || this.selection.contains(pkg) )?'checked':''; }
     mod( pkg ){ return pkg.split('/').pop(); }
     rev( pkg, packages ){ return packages && packages.dependencies[pkg].version; }
     getTag(){ return this.localName }
 }
 
-// window.customElements.define( LoadCollection.is, LoadCollection);
+window.customElements.define( LoadCollection.is, LoadCollection); // for extending by custom collections via

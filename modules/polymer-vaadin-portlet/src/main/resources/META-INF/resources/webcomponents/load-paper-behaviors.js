@@ -12,11 +12,8 @@ class LoadPaperBehaviors extends LoadCollection
 
     static get is(){ return 'load-paper-behaviors'}
 
-    ready()
-    {   super.ready();
-        if( !this.enabled )
-            return this.msg = "disabled";
-        const errback = err => console.error( this.msg+=" load error "+err, err );
+    initDependencies()
+    {   const errback = err => console.error( this.msg+=" load error "+err, err );
 
         if( this.initModule("@polymer/paper-behaviors/paper-button-behavior"            ) ) import( "@polymer/paper-behaviors/paper-button-behavior"          ).catch(errback);
         if( this.initModule("@polymer/paper-behaviors/paper-checked-element-behavior"   ) ) import( "@polymer/paper-behaviors/paper-checked-element-behavior" ).catch(errback);

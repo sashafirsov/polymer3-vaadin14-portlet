@@ -12,12 +12,8 @@ class LoadPaperElement extends LoadCollection
 
     static get is(){ return 'load-paper-elements'}
 
-    ready()
-    {   super.ready();
-        if( !this.enabled )
-            return this.msg = "disabled";
-        this.msg = "";
-        const errback = err => console.error( this.msg+=" load error "+err, err );
+    initDependencies()
+    {   const errback = err => console.error( this.msg+=" load error "+err, err );
 
 
         if( this.initModule("@polymer/paper-badge"                  ) ) import( "@polymer/paper-badge"                   ).catch(errback);
