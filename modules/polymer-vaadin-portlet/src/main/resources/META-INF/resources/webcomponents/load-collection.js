@@ -77,7 +77,7 @@ LoadCollection extends PolymerElement
         this.dependencies.push({ name:pkg,active, tag:pkg.split('/').pop() });
         return active;
     }
-    checkedAttr(pkg){ return ( this.selection ==='all' || this.selection.contains(pkg) )?'checked':''; }
+    checkedAttr(pkg){ return ( !this.selection || this.selection ==='all' || this.selection.includes(pkg) )?'checked':''; }
     mod( pkg ){ return pkg.split('/').pop(); }
     rev( pkg, packages ){ return packages && packages.dependencies[pkg].version; }
     getTag(){ return this.localName }

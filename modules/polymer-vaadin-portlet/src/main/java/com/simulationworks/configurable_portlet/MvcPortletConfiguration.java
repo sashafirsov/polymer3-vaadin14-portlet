@@ -16,7 +16,7 @@ MvcPortletConfiguration
 {
 
     @Meta.AD(
-            deflt = "any",
+            deflt = "all",
             required = false
     )
     public
