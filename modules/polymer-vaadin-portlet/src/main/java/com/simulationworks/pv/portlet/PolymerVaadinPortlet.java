@@ -1,5 +1,6 @@
 package com.simulationworks.pv.portlet;
 
+import com.simulationworks.configurable_portlet.ConfigurableMvcPortlet;
 import com.simulationworks.pv.constants.PolymerVaadinPortletKeys;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -26,5 +27,6 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class PolymerVaadinPortlet extends MVCPortlet {
+public class PolymerVaadinPortlet extends ConfigurableMvcPortlet
+{
 }

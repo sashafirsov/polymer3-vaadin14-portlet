@@ -2,3 +2,4 @@ Bundle-Name: polymer-vaadin-portlet
 Bundle-SymbolicName: polymer-vaadin-portlet
 Bundle-Version: 1.0.0
 Export-Package: com.simulationworks.pv.constants
+-metatype: *
