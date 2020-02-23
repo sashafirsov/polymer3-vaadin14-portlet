@@ -13,55 +13,51 @@ class LoadIronElement extends LoadCollection
     static get is(){ return 'load-iron-elements'}
 
     initDependencies()
-    {   const errback = err => console.error( this.msg+=" load error "+err, err );
-
-//      if( this.isEnabled("@polymer/iron-a11y-announcer"                 ) ) import("@polymer/iron-a11y-announcer"           ).catch(errback);
-//      if( this.isEnabled("@polymer/iron-a11y-keys"                      ) ) import("@polymer/iron-a11y-keys"                ).catch(errback);
-//      if( this.isEnabled("@polymer/iron-a11y-keys-behavior"             ) ) import("@polymer/iron-a11y-keys-behavior"       ).catch(errback);
-        if( this.initModule("@polymer/iron-ajax"                     ) ) import("@polymer/iron-ajax"                     ).catch(errback);
-        if( this.initModule("@polymer/iron-autogrow-textarea"        ) ) import("@polymer/iron-autogrow-textarea"        ).catch(errback);
-//      if( this.isEnabled("@polymer/iron-behaviors"                      ) ) import("@polymer/iron-behaviors"                ).catch(errback);
-        if( this.initModule("@polymer/iron-checked-element-behavior" ) ) import("@polymer/iron-checked-element-behavior" ).catch(errback);
-        if( this.initModule("@polymer/iron-collapse"                 ) ) import("@polymer/iron-collapse"                 ).catch(errback);
-        if( this.initModule("@polymer/iron-component-page"           ) ) import("@polymer/iron-component-page"           ).catch(errback);
-//      if( this.isEnabled("@polymer/iron-demo-helpers"                   ) ) import("@polymer/iron-demo-helpers"             ).catch(errback);
-//      if( this.isEnabled("@polymer/iron-doc-viewer"                     ) ) import("@polymer/iron-doc-viewer"               ).catch(errback);
-        if( this.initModule("@polymer/iron-dropdown"                 ) ) import("@polymer/iron-dropdown"                 ).catch(errback);
-        if( this.initModule("@polymer/iron-fit-behavior"             ) ) import("@polymer/iron-fit-behavior"             ).catch(errback);
-//      if( this.isEnabled("@polymer/iron-flex-layout"                    ) ) import("@polymer/iron-flex-layout"              ).catch(errback);
-        if( this.initModule("@polymer/iron-form"                     ) ) import("@polymer/iron-form"                     ).catch(errback);
-        if( this.initModule("@polymer/iron-form-element-behavior"    ) ) import("@polymer/iron-form-element-behavior"    ).catch(errback);
-        if( this.initModule("@polymer/iron-icon"                     ) ) import("@polymer/iron-icon"                     ).catch(errback);
-        if( this.initModule("@polymer/iron-icons"                    ) ) import("@polymer/iron-icons"                    ).catch(errback);
-        if( this.initModule("@polymer/iron-iconset"                  ) ) import("@polymer/iron-iconset"                  ).catch(errback);
-        if( this.initModule("@polymer/iron-iconset-svg"              ) ) import("@polymer/iron-iconset-svg"              ).catch(errback);
-        if( this.initModule("@polymer/iron-image"                    ) ) import("@polymer/iron-image"                    ).catch(errback);
-        if( this.initModule("@polymer/iron-input"                    ) ) import("@polymer/iron-input"                    ).catch(errback);
-        if( this.initModule("@polymer/iron-jsonp-library"            ) ) import("@polymer/iron-jsonp-library"            ).catch(errback);
-        // if( this.initModule("@polymer/iron-label"                    ) ) import("@polymer/iron-label"                    ).catch(errback);
-        if( this.initModule("@polymer/iron-list"                     ) ) import("@polymer/iron-list"                     ).catch(errback);
-        if( this.initModule("@polymer/iron-localstorage"             ) ) import("@polymer/iron-localstorage"             ).catch(errback);
-        if( this.initModule("@polymer/iron-media-query"              ) ) import("@polymer/iron-media-query"              ).catch(errback);
-//      if( this.isEnabled("@polymer/iron-menu-behavior"                  ) ) import("@polymer/iron-menu-behavior"            ).catch(errback);
-        if( this.initModule("@polymer/iron-meta"                     ) ) import("@polymer/iron-meta"                     ).catch(errback);
-        if( this.initModule("@polymer/iron-overlay-behavior"         ) ) import("@polymer/iron-overlay-behavior"         ).catch(errback);
-//      if( this.isEnabled("@polymer/iron-page-url"                       ) ) import("@polymer/iron-page-url"                 ).catch(errback);
-        if( this.initModule("@polymer/iron-pages"                    ) ) import("@polymer/iron-pages"                    ).catch(errback);
-        if( this.initModule("@polymer/iron-range-behavior"           ) ) import("@polymer/iron-range-behavior"           ).catch(errback);
-        if( this.initModule("@polymer/iron-resizable-behavior"       ) ) import("@polymer/iron-resizable-behavior"       ).catch(errback);
-        if( this.initModule("@polymer/iron-scroll-target-behavior"   ) ) import("@polymer/iron-scroll-target-behavior"   ).catch(errback);
-        if( this.initModule("@polymer/iron-scroll-threshold"         ) ) import("@polymer/iron-scroll-threshold"         ).catch(errback);
-//      if( this.isEnabled("@polymer/iron-selector"                       ) ) import("@polymer/iron-selector"                 ).catch(errback);
-//      if( this.isEnabled("@polymer/iron-signals"                        ) ) import("@polymer/iron-signals"                  ).catch(errback);
-        if( this.initModule("@polymer/iron-swipeable-container"      ) ) import("@polymer/iron-swipeable-container"      ).catch(errback);
-        if( this.initModule("@polymer/iron-test-helpers"             ) ) import("@polymer/iron-test-helpers"             ).catch(errback);
-        if( this.initModule("@polymer/iron-validatable-behavior"     ) ) import("@polymer/iron-validatable-behavior"     ).catch(errback);
-        if( this.initModule("@polymer/iron-validator-behavior"       ) ) import("@polymer/iron-validator-behavior"       ).catch(errback);
-
-     //        import("@polymer/iron-elements")
-     //            .then( x=> console.log( this.msg="\"@polymer/iron-elements\" loaded", x ) )
-     //            .catch( err => console.error( this.msg="\"@polymer/iron-elements\" load error", err ) );
-
+    {   const init= m => this.initModule(m);
+        return [
+//      init("@polymer/iron-a11y-announcer"               )  && import("@polymer/iron-a11y-announcer"           ),
+//      init("@polymer/iron-a11y-keys"                    )  && import("@polymer/iron-a11y-keys"                ),
+//      init("@polymer/iron-a11y-keys-behavior"           )  && import("@polymer/iron-a11y-keys-behavior"       ),
+        init("@polymer/iron-ajax"                     )  && import("@polymer/iron-ajax"                     ),
+        init("@polymer/iron-autogrow-textarea"        )  && import("@polymer/iron-autogrow-textarea"        ),
+//      init("@polymer/iron-behaviors"                    )  && import("@polymer/iron-behaviors"                ),
+        init("@polymer/iron-checked-element-behavior" )  && import("@polymer/iron-checked-element-behavior" ),
+        init("@polymer/iron-collapse"                 )  && import("@polymer/iron-collapse"                 ),
+        init("@polymer/iron-component-page"           )  && import("@polymer/iron-component-page"           ),
+//      init("@polymer/iron-demo-helpers"                 )  && import("@polymer/iron-demo-helpers"             ),
+//      init("@polymer/iron-doc-viewer"                   )  && import("@polymer/iron-doc-viewer"               ),
+        init("@polymer/iron-dropdown"                 )  && import("@polymer/iron-dropdown"                 ),
+        init("@polymer/iron-fit-behavior"             )  && import("@polymer/iron-fit-behavior"             ),
+//      init("@polymer/iron-flex-layout"                  )  && import("@polymer/iron-flex-layout"              ),
+        init("@polymer/iron-form"                     )  && import("@polymer/iron-form"                     ),
+        init("@polymer/iron-form-element-behavior"    )  && import("@polymer/iron-form-element-behavior"    ),
+        init("@polymer/iron-icon"                     )  && import("@polymer/iron-icon"                     ),
+        init("@polymer/iron-icons"                    )  && import("@polymer/iron-icons"                    ),
+        init("@polymer/iron-iconset"                  )  && import("@polymer/iron-iconset"                  ),
+        init("@polymer/iron-iconset-svg"              )  && import("@polymer/iron-iconset-svg"              ),
+        init("@polymer/iron-image"                    )  && import("@polymer/iron-image"                    ),
+        init("@polymer/iron-input"                    )  && import("@polymer/iron-input"                    ),
+        init("@polymer/iron-jsonp-library"            )  && import("@polymer/iron-jsonp-library"            ),
+        // init("@polymer/iron-label"                     )  && import("@polymer/iron-label"                    ),
+        init("@polymer/iron-list"                     )  && import("@polymer/iron-list"                     ),
+        init("@polymer/iron-localstorage"             )  && import("@polymer/iron-localstorage"             ),
+        init("@polymer/iron-media-query"              )  && import("@polymer/iron-media-query"              ),
+//      init("@polymer/iron-menu-behavior"                )  && import("@polymer/iron-menu-behavior"            ),
+        init("@polymer/iron-meta"                     )  && import("@polymer/iron-meta"                     ),
+        init("@polymer/iron-overlay-behavior"         )  && import("@polymer/iron-overlay-behavior"         ),
+//      init("@polymer/iron-page-url"                     )  && import("@polymer/iron-page-url"                 ),
+        init("@polymer/iron-pages"                    )  && import("@polymer/iron-pages"                    ),
+        init("@polymer/iron-range-behavior"           )  && import("@polymer/iron-range-behavior"           ),
+        init("@polymer/iron-resizable-behavior"       )  && import("@polymer/iron-resizable-behavior"       ),
+        init("@polymer/iron-scroll-target-behavior"   )  && import("@polymer/iron-scroll-target-behavior"   ),
+        init("@polymer/iron-scroll-threshold"         )  && import("@polymer/iron-scroll-threshold"         ),
+//      init("@polymer/iron-selector"                     )  && import("@polymer/iron-selector"                 ),
+//      init("@polymer/iron-signals"                      )  && import("@polymer/iron-signals"                  ),
+        init("@polymer/iron-swipeable-container"      )  && import("@polymer/iron-swipeable-container"      ),
+        init("@polymer/iron-test-helpers"             )  && import("@polymer/iron-test-helpers"             ),
+        init("@polymer/iron-validatable-behavior"     )  && import("@polymer/iron-validatable-behavior"     ),
+        init("@polymer/iron-validator-behavior"       )  && import("@polymer/iron-validator-behavior"       ),
+        ]
     }
 }
 

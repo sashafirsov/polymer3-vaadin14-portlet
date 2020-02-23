@@ -13,12 +13,13 @@ class LoadPaperBehaviors extends LoadCollection
     static get is(){ return 'load-paper-behaviors'}
 
     initDependencies()
-    {   const errback = err => console.error( this.msg+=" load error "+err, err );
-
-        if( this.initModule("@polymer/paper-behaviors/paper-button-behavior"            ) ) import( "@polymer/paper-behaviors/paper-button-behavior"          ).catch(errback);
-        if( this.initModule("@polymer/paper-behaviors/paper-checked-element-behavior"   ) ) import( "@polymer/paper-behaviors/paper-checked-element-behavior" ).catch(errback);
-        if( this.initModule("@polymer/paper-behaviors/paper-inky-focus-behavior"        ) ) import( "@polymer/paper-behaviors/paper-inky-focus-behavior"      ).catch(errback);
-        if( this.initModule("@polymer/paper-behaviors/paper-ripple-behavior"            ) ) import( "@polymer/paper-behaviors/paper-ripple-behavior"          ).catch(errback);
+    {   const init= m => this.initModule(m);
+        return [
+        init("@polymer/paper-behaviors/paper-button-behavior"          ) && import( "@polymer/paper-behaviors/paper-button-behavior"           ),
+        init("@polymer/paper-behaviors/paper-checked-element-behavior" ) && import( "@polymer/paper-behaviors/paper-checked-element-behavior"  ),
+        init("@polymer/paper-behaviors/paper-inky-focus-behavior"      ) && import( "@polymer/paper-behaviors/paper-inky-focus-behavior"       ),
+        init("@polymer/paper-behaviors/paper-ripple-behavior"          ) && import( "@polymer/paper-behaviors/paper-ripple-behavior"           ),
+        ]
     }
 }
 

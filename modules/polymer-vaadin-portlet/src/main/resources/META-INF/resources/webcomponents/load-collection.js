@@ -23,9 +23,12 @@ LoadCollection extends PolymerElement
         <style>
           :host { display: block; }
           iron-component-page,paper-drawer-panel{display: none;}
+          .inactive{ border: silver dotted 1px;}
+          .loading{ border: blue double 1px;}
+          .loaded{ border: solid black 1px;}
+          .error{ border: solid red 1px;}
         </style>
-        <fieldset>
-            [[msg]]
+        <fieldset class$="[[status]]">            
             <details>      
                 <summary>&lt;[[getTag()]]&gt;</summary>     
                 <iron-ajax auto
@@ -58,9 +61,15 @@ LoadCollection extends PolymerElement
     ready()
     {   super.ready();
         if( !this.active )
-            return this.msg = "inactive";
-        this.msg = "";
-        this.initDependencies();
+            return this.status = "inactive";
+        this.status = "loading";
+        const OK = Promise.resolve(1);
+        this.promise = Promise.all( this.initDependencies().map( p=> p || OK) )
+            .then( x=> this.status="loaded" )
+            .catch( err=>
+            {   debugger;
+                console.error( this.status ="error", this.is, err )
+            });
     }
     getSelection(){ return this.dependencies && this.dependencies.filter( p=>p.active ).map(p=>p.name).join(",") }
 
