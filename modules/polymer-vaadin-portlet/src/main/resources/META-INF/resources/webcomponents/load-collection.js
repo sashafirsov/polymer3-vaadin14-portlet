@@ -39,9 +39,9 @@ LoadCollection extends PolymerElement
                        <input type="checkbox" [[disabled]] on-change="onSelect" id="cb-[[ pkg.name ]]"
                         checked="{{ pkg.active }}"                         
                         />
-                       <a href="https://www.webcomponents.org/element/[[ pkg.name ]]">[[pkg.name]]</a>
+                       <a href="[[ docs(pkg) ]]" target="_blank" >[[pkg.name]]</a>
                             [[ rev(pkg.name,packages) ]]
-                            <div inner-h-t-m-l="<[[pkg.tag]]></[[pkg.tag]]>"></div> 
+                        <span inner-h-t-m-l="<[[pkg.tag]]>\t&hellip;</[[pkg.tag]]>"></span> 
                     </div>    
                 </template> 
             </details>          
@@ -77,10 +77,11 @@ LoadCollection extends PolymerElement
         this.dependencies.push({ name:pkg,active, tag:pkg.split('/').pop() });
         return active;
     }
-    checkedAttr(pkg){ return ( !this.selection || this.selection ==='all' || this.selection.includes(pkg) )?'checked':''; }
+    checkedAttr(pkg){ return ( !this.selection || this.selection ==='all' || this.selection.split(',').includes(pkg) )?'checked' : '' }
     mod( pkg ){ return pkg.split('/').pop(); }
     rev( pkg, packages ){ return packages && packages.dependencies[pkg].version; }
     getTag(){ return this.localName }
+    docs(pkg){ return `https://www.webcomponents.org/element/${ pkg.name }` }
 }
 
 window.customElements.define( LoadCollection.is, LoadCollection); // for extending by custom collections via

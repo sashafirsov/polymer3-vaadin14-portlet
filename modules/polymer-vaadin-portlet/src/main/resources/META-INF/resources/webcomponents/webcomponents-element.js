@@ -3,6 +3,7 @@ import "@polymer/iron-ajax";
 import "./load-iron-elements";
 import "./load-paper-behaviors";
 import "./load-paper-elements";
+import "./load-vaadin-elements";
 
 /**
  * `webcomponents-element`
@@ -25,6 +26,7 @@ class WebcomponentsElement extends PolymerElement
 <load-paper-behaviors [[disabled]] selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection"></load-paper-behaviors>
 <load-paper-elements  [[disabled]] selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection"></load-paper-elements>
 <load-iron-elements   [[disabled]] selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection"></load-iron-elements>
+<load-vaadin-elements [[disabled]] selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection"></load-vaadin-elements>
     `;
     }
 
