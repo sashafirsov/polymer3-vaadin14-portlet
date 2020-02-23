@@ -17,15 +17,14 @@ class LoadVaadinElement extends LoadCollection
 
         if( this.initModule('@vaadin/vaadin' ) ) import('@vaadin/vaadin').catch(errback);
         // @vaadin/vaadin aggregation
-        if( this.initModule('@vaadin/vaadin-core/vaadin-core'                         ) ) import('@vaadin/vaadin-core/vaadin-core'                         ).catch(errback);
-        if( this.initModule('@vaadin/vaadin-board/vaadin-board'                       ) ) import('@vaadin/vaadin-board/vaadin-board'                       ).catch(errback);
-        if( this.initModule('@vaadin/vaadin-charts/vaadin-chart'                      ) ) import('@vaadin/vaadin-charts/vaadin-chart'                      ).catch(errback);   
-        if( this.initModule('@vaadin/vaadin-confirm-dialog/vaadin-confirm-dialog'     ) ) import('@vaadin/vaadin-confirm-dialog/vaadin-confirm-dialog'     ).catch(errback);                       
-        if( this.initModule('@vaadin/vaadin-cookie-consent/vaadin-cookie-consent'     ) ) import('@vaadin/vaadin-cookie-consent/vaadin-cookie-consent'     ).catch(errback);                       
-        if( this.initModule('@vaadin/vaadin-crud/vaadin-crud'                         ) ) import('@vaadin/vaadin-crud/vaadin-crud'                         ).catch(errback);   
-        if( this.initModule('@vaadin/vaadin-grid-pro/vaadin-grid-pro'                 ) ) import('@vaadin/vaadin-grid-pro/vaadin-grid-pro'                 ).catch(errback);           
-        if( this.initModule('@vaadin/vaadin-grid-pro/vaadin-grid-pro-edit-column'     ) ) import('@vaadin/vaadin-grid-pro/vaadin-grid-pro-edit-column'     ).catch(errback);                       
-        if( this.initModule('@vaadin/vaadin-rich-text-editor/vaadin-rich-text-editor' ) ) import('@vaadin/vaadin-rich-text-editor/vaadin-rich-text-editor' ).catch(errback);
+        if( this.initModule('@vaadin/vaadin-core'            ) ) import('@vaadin/vaadin-core'             ).catch(errback);
+        if( this.initModule('@vaadin/vaadin-board'           ) ) import('@vaadin/vaadin-board'            ).catch(errback);
+        if( this.initModule('@vaadin/vaadin-charts'          ) ) import('@vaadin/vaadin-charts'           ).catch(errback);
+        if( this.initModule('@vaadin/vaadin-confirm-dialog'  ) ) import('@vaadin/vaadin-confirm-dialog'   ).catch(errback);
+        if( this.initModule('@vaadin/vaadin-cookie-consent'  ) ) import('@vaadin/vaadin-cookie-consent'   ).catch(errback);
+        if( this.initModule('@vaadin/vaadin-crud'            ) ) import('@vaadin/vaadin-crud'             ).catch(errback);
+        if( this.initModule('@vaadin/vaadin-grid-pro'        ) ) import('@vaadin/vaadin-grid-pro'         ).catch(errback);
+        if( this.initModule('@vaadin/vaadin-rich-text-editor') ) import('@vaadin/vaadin-rich-text-editor' ).catch(errback);
 
         // @vaadin/vaadin README.md
         if( this.initModule( "@vaadin/vaadin-accordion"      ) ) import("@vaadin/vaadin-accordion"      ).catch(errback);

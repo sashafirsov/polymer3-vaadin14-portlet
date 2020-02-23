@@ -33,16 +33,18 @@ LoadCollection extends PolymerElement
                     handle-as="json"
                     last-response="{{packages}}"
                 ></iron-ajax>
-                <template is="dom-repeat" items="[[dependencies]]" as="pkg">
-                    <div>
-                    
-                       <input type="checkbox" [[disabled]] on-change="onSelect" id="cb-[[ pkg.name ]]"
-                        checked="{{ pkg.active }}"                         
-                        />
-                       <a href="[[ docs(pkg) ]]" target="_blank" >[[pkg.name]]</a>
-                            [[ rev(pkg.name,packages) ]]
-                        <span inner-h-t-m-l="<[[pkg.tag]]>\t&hellip;</[[pkg.tag]]>"></span> 
-                    </div>    
+                
+                <template is="dom-if" if="[[ packages ]]" >
+                    <template is="dom-repeat" items="[[ blend(dependencies,packages) ]]" as="pkg">
+                        <div>                        
+                           <input type="checkbox" [[disabled]] on-change="onSelect" id="cb-[[ pkg.name ]]"
+                            checked="{{ pkg.active }}"                         
+                            />
+                           <a href="[[ docs(pkg) ]]" target="_blank" >[[pkg.name]]</a>
+                                [[ pkg.version ]]
+                            <span inner-h-t-m-l="<[[pkg.tag]]>\t&hellip;</[[pkg.tag]]>"></span> 
+                        </div>    
+                    </template> 
                 </template> 
             </details>          
         </fieldset>           
@@ -79,9 +81,24 @@ LoadCollection extends PolymerElement
     }
     checkedAttr(pkg){ return ( !this.selection || this.selection ==='all' || this.selection.split(',').includes(pkg) )?'checked' : '' }
     mod( pkg ){ return pkg.split('/').pop(); }
-    rev( pkg, packages ){ return packages && packages.dependencies[pkg].version; }
     getTag(){ return this.localName }
     docs(pkg){ return `https://www.webcomponents.org/element/${ pkg.name }` }
+    blend(dependencies,packages)
+    {
+        if( packages )
+        {
+            dependencies.forEach( m=>
+            {   let p = m.name.split('/').slice(0,-1).join('/');
+                let d = packages.dependencies[m.name] ;
+                if( d )
+                    return m.version = d.version;
+                d = packages.dependencies[ p ] || {};
+                m.version = d ? `${p}-${d.version}` : '?';
+            });
+        }
+        return dependencies;
+    }
+    // toJson(packages){return JSON.stringify(packages.dependencies)}
 }
 
 window.customElements.define( LoadCollection.is, LoadCollection); // for extending by custom collections via
