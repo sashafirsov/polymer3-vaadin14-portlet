@@ -6,15 +6,14 @@
 <% if("esm-unbundled".equals(jsProfile) ) { %><jsp:include page="/webcomponents/build/esm-unbundled/index.html" /><% }%>
 
 
-<b><liferay-ui:message key="polymervaadin.caption"/></b>
-<webcomponents-element selection="<%=configStr%>"></webcomponents-element>
+<webcomponents-element selection="<%=configStr%>"  visible="1"></webcomponents-element>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>"   var="configurationActionURL" />
 <liferay-portlet:renderURL portletConfiguration="<%= true %>"   var="configurationRenderURL" />
-
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<div id="p3v14<%= portletDisplay.getRootPortletId() %>">
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm" >
 
     <aui:input name="<%= Constants.CMD %>" type="hidden"
                value="<%= Constants.UPDATE %>" />
@@ -24,21 +23,28 @@
 
     <aui:fieldset>
 
-        <aui:input name="configStr" label="String config parameter"
+        <aui:input name="configStr" label="configStr, CSV of modules to load by webcomponents-element"
+                   description="filled from webcomponents-element UI above"
                    value="<%= configStr %>" />
-
 
     </aui:fieldset>
     <aui:button-row>
         <aui:button type="submit"></aui:button>
     </aui:button-row>
 </aui:form>
+</div>
 <script>
-    $(x=>
-    {
-        $('button[type=submit]').click( x=>
+    $( function()
+    {   var cfg = document.querySelector('webcomponents-element');
+debugger;
+        cfg.addEventListener("selection-changed",function( ev )
         {
-            $('input[type=text]').val( document.querySelector('webcomponents-element').selection );
+debugger;
+            $('input[type=text]',p3v14<%= portletDisplay.getRootPortletId() %>).val( cfg.selection );
         });
+        // $('button[type=submit]').click( x=>
+        // {
+        //     $('input[type=text]').val( document.querySelector('webcomponents-element').selection );
+        // });
     });
 </script>
