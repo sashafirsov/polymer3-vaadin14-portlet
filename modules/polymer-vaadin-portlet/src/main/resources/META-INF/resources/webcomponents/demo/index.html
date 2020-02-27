@@ -23,11 +23,37 @@
   <body>
     <div class="vertical-section-container centered">
       <h3>Basic webcomponents-element demo</h3>
+        <br/><br/><br/><br/><br/>
+        CSV of modules to load by webcomponents-element: <br/>
+        <input type="text" /> <p>( <span id="selectedcount"></span> total )</p>
       <demo-snippet>
         <template>
-          <webcomponents-element></webcomponents-element>
+            Enabled when visible. For "admin" role.
+            <webcomponents-element visible="1"></webcomponents-element>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+            Disabled test. For "editor" role.
+            <webcomponents-element  visible="1" disabled="disabled"></webcomponents-element>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+            By default is invisible, just loads dependencies.
+            <webcomponents-element ></webcomponents-element>
         </template>
       </demo-snippet>
     </div>
+  <script type="module">
+      var cfg = document.querySelector('webcomponents-element')
+      ,   txt = document.querySelector('input[type=text]');
+      txt.value = cfg.selection ;
+      cfg.addEventListener("selection-changed",function( ev )
+      {
+          txt.value = cfg.selection ;
+          selectedcount.innerText = txt.value.split(',').filter(x=>x).length;
+      });
+  </script>
   </body>
 </html>

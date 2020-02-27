@@ -20,43 +20,51 @@ LoadCollection extends PolymerElement
 
     static get template()
     {   return html`
-        <style>
-          :host { display: block; }
-          iron-component-page,paper-drawer-panel{display: none;}
-          .inactive{ border: silver dotted 1px;}
-          .loading{ border: blue double 1px;}
-          .loaded{ border: solid black 1px;}
-          .error{ border: solid red 1px;}
-        </style>
-        <fieldset class$="[[status]]">            
-            <details>      
-                <summary>&lt;[[getTag()]]&gt;</summary>     
-                <iron-ajax auto
-                    url="[[wcRoot]]/package-lock.json" 
-                    handle-as="json"
-                    last-response="{{packages}}"
-                ></iron-ajax>
-                
-                <template is="dom-if" if="[[ packages ]]" >
-                    <template is="dom-repeat" items="[[ blend(dependencies,packages) ]]" as="pkg">
-                        <div>                        
-                           <input type="checkbox" [[disabled]] on-change="onSelect" id="cb-[[ pkg.name ]]"
-                            checked="{{ pkg.active }}"                         
-                            />
-                           <a href="[[ docs(pkg) ]]" target="_blank" >[[pkg.name]]</a>
-                                [[ pkg.version ]]
-                            <span inner-h-t-m-l="<[[pkg.tag]]>\t&hellip;</[[pkg.tag]]>"></span> 
-                        </div>    
-                    </template> 
+<template is="dom-if" if="[[ visible ]]" >
+
+    <style>
+      :host { display: block; }
+      iron-component-page,paper-drawer-panel{display: none;}
+      .inactive{ border: silver dotted 1px;}
+      .loading{ border: blue double 1px;}
+      .loaded{ border: solid black 1px;}
+      .error{ border: solid red 1px;}
+    </style>
+    <fieldset class$="[[status]]">            
+        <details>      
+            <summary><input type="checkbox" disabled$="[[disabled]]" title="toggle all"on-change="onToggleAll" /> &lt;[[getTag()]]&gt;</summary>     
+            <iron-ajax auto
+                url="[[wcRoot]]/package-lock.json" 
+                handle-as="json"
+                last-response="{{packages}}"
+            ></iron-ajax>
+            
+            <template is="dom-if" if="[[ packages ]]" >
+                <template is="dom-repeat" items="[[ blend(dependencies,packages) ]]" as="pkg">
+                    <div>                        
+                       <input type="checkbox" disabled$="[[disabled]]"  on-change="onSelect" id="cb-[[ pkg.name ]]"
+                        checked="{{ pkg.active }}"                         
+                        />
+                       <a href="[[ docs(pkg) ]]" target="_blank" >[[pkg.name]]</a>
+                            [[ pkg.version ]]
+                        <span inner-h-t-m-l="<[[pkg.tag]]>\t&hellip;</[[pkg.tag]]>"></span> 
+                    </div>    
                 </template> 
-            </details>          
-        </fieldset>           
+            </template> 
+        </details>          
+    </fieldset>    
+</template>       
       `;
     }
     static get is(){ return 'load-collection'}
     static get properties()
     {
-        return { disabled: String, dependencies: Array, selection:{type:String, notify:true}, active:{ type:Boolean, value:true } };
+        return  { disabled: String
+                , dependencies: Array
+                ,    selection: { type:String, notify:true}
+                ,       active: { type:Boolean, value:true }
+                ,      visible: { type:Boolean, value:false }
+                };
     }
     ready()
     {   super.ready();
@@ -73,10 +81,21 @@ LoadCollection extends PolymerElement
     }
     getSelection(){ return this.dependencies && this.dependencies.filter( p=>p.active ).map(p=>p.name).join(",") }
 
+    onToggleAll(ev)
+    {
+        [...this.shadowRoot.querySelectorAll("input[type=checkbox]")]
+            .forEach( cb=> cb.checked = ev.target.checked );
+        this.dependencies && this.dependencies.forEach( p=>p.active = ev.target.checked );
+        this._updateSelect();
+    }
     onSelect(ev)
     {
-        this.dependencies.find(d=>d.name===ev.target.id.substring(3)).active = ev.target.checked
-        this.set("selection",this.dependencies.filter( p=>p.active ).map(p=>p.name).join(",") );
+        this.dependencies.find(d=>d.name===ev.target.id.substring(3)).active = ev.target.checked;
+        this._updateSelect();
+    }
+    _updateSelect()
+    {
+        this.set("selection", this.dependencies.filter( p=>p.active ).map(p=>p.name).join(",") );
     }
 
     initDependencies()

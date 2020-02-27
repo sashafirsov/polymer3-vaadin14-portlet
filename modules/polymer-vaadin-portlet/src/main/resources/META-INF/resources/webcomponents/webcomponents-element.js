@@ -18,28 +18,31 @@ class WebcomponentsElement extends PolymerElement
     static get template()
     {
         return html`
-<style>
-  :host { display: block; }
-</style>
-<h2>Web Components Collections</h2>
-<i>Components are pulled as lazy loaded dependencies.</i>
-<load-paper-behaviors [[disabled]] selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection"></load-paper-behaviors>
-<load-paper-elements  [[disabled]] selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection"></load-paper-elements>
-<load-iron-elements   [[disabled]] selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection"></load-iron-elements>
-<load-vaadin-elements [[disabled]] selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection"></load-vaadin-elements>
+<template is="dom-if" if="[[ visible ]]" >
+    <style>
+      :host { display: block; }
+    </style>
+    <h2>Web Components Collections Loader</h2>
+    <i>Components are pulled as lazy loaded dependencies.</i>
+</template>
+<load-paper-behaviors disabled$="[[disabled]]" selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection" visible$="[[visible]]"></load-paper-behaviors>
+<load-paper-elements  disabled$="[[disabled]]" selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection" visible$="[[visible]]"></load-paper-elements>
+<load-iron-elements   disabled$="[[disabled]]" selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection" visible$="[[visible]]"></load-iron-elements>
+<load-vaadin-elements disabled$="[[disabled]]" selection=[[selection]] on-selection-changed='onCollectionChanged' class="load-collection" visible$="[[visible]]"></load-vaadin-elements>
     `;
     }
 
     static get properties()
     {
-        return  {   selection: { type: String, value: "all", notify:true }
-                ,    disabled: String
+        return  {   selection: { type: String, value: "all", notify:true, reflectToAttribute:true }
+                ,    disabled: { type: String, reflectToAttribute:true }
+                ,     visible: { type:Boolean, reflectToAttribute:true, value:false }
                 };
     }
 
     ready()
     {   super.ready();
-        this.onCollectionChanged();
+        // this.onCollectionChanged();
         Promise.all( [...this.shadowRoot.querySelectorAll(".load-collection")].map( el=>el.promise ) )
             .then(x=>
             {   this.status = "ready";
