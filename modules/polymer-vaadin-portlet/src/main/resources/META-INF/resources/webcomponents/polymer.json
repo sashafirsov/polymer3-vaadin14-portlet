@@ -17,12 +17,32 @@
         "push"
       ],
       "js": {
-        "minify": false,
+        "minify": true,
         "compile": "es2015",
         "transformModulesToAmd": false
       },
       "css" : {"minify": true },
       "html": {"minify": true },
+      "bundle": false,
+      "addServiceWorker": false,
+      "addPushManifest": true,
+      "preset": "es6-unbundled"
+    },
+    {
+      "name": "esm-debug",
+      "basePath": "/o/polymer-vaadin-portlet/webcomponents/build/esm-debug",
+      "browserCapabilities": [
+        "es2015",
+        "modules",
+        "push"
+      ],
+      "js": {
+        "minify": false,
+        "compile": "es2015",
+        "transformModulesToAmd": false
+      },
+      "css" : {"minify": false },
+      "html": {"minify": false },
       "bundle": false,
       "addServiceWorker": false,
       "addPushManifest": true,

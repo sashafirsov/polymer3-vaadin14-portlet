@@ -36,15 +36,9 @@
 <script>
     $( function()
     {   var cfg = document.querySelector('webcomponents-element');
-debugger;
         cfg.addEventListener("selection-changed",function( ev )
         {
-debugger;
             $('input[type=text]',p3v14<%= portletDisplay.getRootPortletId() %>).val( cfg.selection );
         });
-        // $('button[type=submit]').click( x=>
-        // {
-        //     $('input[type=text]').val( document.querySelector('webcomponents-element').selection );
-        // });
     });
 </script>

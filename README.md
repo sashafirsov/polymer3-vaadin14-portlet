@@ -10,6 +10,14 @@ It would be reused by independently deployed portlets UI without the need for em
 
 # Use instructions
 TODO
+replace urls in build/<%=jsProfile%>/index.html
+# Debug
+Liferay side debug mode could be triggered by
+
+    ?js_fast_load=0&css_fast_load=0&strip=0
+
+`js_fast_load=0` also would trigger `esm-debug` bundle.  
+
 
 # Implementation notes
 ## Loader ui - webcomponents-element
