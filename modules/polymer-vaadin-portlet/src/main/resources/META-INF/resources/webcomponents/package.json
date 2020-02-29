@@ -95,6 +95,6 @@
     "postinstall": "npm dedupe",
     "lint": "polymer lint --rules polymer-3",
     "test": "polymer test --npm",
-    "build": "cross-env NODE_OPTIONS=--max_old_space_size=8192 polymer build"
+    "build": "cross-env NODE_OPTIONS=--max_old_space_size=4098 polymer build && node post-build.mjs"
   }
 }
