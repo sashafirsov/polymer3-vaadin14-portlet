@@ -12,6 +12,11 @@ class LoadPaperElement extends LoadCollection
 
     static get is(){ return 'load-paper-elements'}
 
+    isDisabledByDefault(pkg)
+    {
+        return  [   '@polymer/paper-drawer-panel'
+                ].includes(pkg)
+    }
     initDependencies()
     {   const init= m => this.initModule(m);
         return [

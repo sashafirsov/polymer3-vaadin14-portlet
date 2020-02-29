@@ -102,12 +102,20 @@ LoadCollection extends PolymerElement
     {   // override to load collection dependencies
         // if( this.initModule("@polymer/iron-ajax"                     ) ) import("@polymer/iron-ajax"                     ).catch(errback);
     }
+    isDisabledByDefault(pkg)
+    {   // override & return true to avoid package load without explicit enabling in UI
+        // return  [   '@polymer/paper-drawer-panel'
+        //         ].includes(pkg)
+    }
     initModule( pkg )
-    {   let active =  this.checkedAttr(pkg);
+    {   let active =  !this.isDisabledByDefault(pkg) && this.checkedAttr(pkg);
         this.dependencies.push({ name:pkg,active, tag:pkg.split('/').pop() });
         return active;
     }
-    checkedAttr(pkg){ return ( !this.selection || this.selection ==='all' || this.selection.split(',').includes(pkg) )?'checked' : '' }
+    checkedAttr(pkg)
+    {
+        return ( !this.selection || this.selection ==='all' || this.selection.split(',').includes(pkg) )?'checked' : ''
+    }
     mod( pkg ){ return pkg.split('/').pop(); }
     getTag(){ return this.localName }
     docs(pkg){ return `https://www.webcomponents.org/element/${ pkg.name }` }

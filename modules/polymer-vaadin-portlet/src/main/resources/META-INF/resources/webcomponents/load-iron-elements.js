@@ -11,7 +11,11 @@ class LoadIronElement extends LoadCollection
 {
 
     static get is(){ return 'load-iron-elements'}
-
+    isDisabledByDefault(pkg)
+    {
+        return  [   '@polymer/iron-component-page'
+                ].includes(pkg)
+    }
     initDependencies()
     {   const init= m => this.initModule(m);
         return [

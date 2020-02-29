@@ -12,6 +12,19 @@ class LoadVaadinElement extends LoadCollection
 
     static get is(){ return 'load-vaadin-elements'}
     docs(pkg){ let n=pkg.name.split('/').pop(); return `https://github.com/vaadin/${ n }` }
+    isDisabledByDefault(pkg)
+    {
+        return  [   '@vaadin/vaadin'
+                ,   '@vaadin/vaadin-core'
+                ,   '@vaadin/vaadin-grid-pro'
+                ,   '@vaadin/vaadin-board'
+                ,   '@vaadin/vaadin-crud'
+                ,   '@vaadin/vaadin-charts'
+                ,   '@vaadin/vaadin-confirm-dialog'
+                ,   '@vaadin/vaadin-cookie-consent'
+                ,   '@vaadin/vaadin-rich-text-editor'
+                ].includes(pkg)
+    }
     initDependencies()
     {   const init= m => this.initModule(m);
         return [

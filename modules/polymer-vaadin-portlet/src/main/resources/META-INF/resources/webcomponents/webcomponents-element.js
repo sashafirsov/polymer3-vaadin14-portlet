@@ -42,7 +42,6 @@ class WebcomponentsElement extends PolymerElement
 
     ready()
     {   super.ready();
-        // this.onCollectionChanged();
         Promise.all( [...this.shadowRoot.querySelectorAll(".load-collection")].map( el=>el.promise ) )
             .then(x=>
             {   this.status = "ready";
