@@ -5,8 +5,13 @@ const REF_BUILD = 'esm-unbundled'
 {
     const fPath = `./build/${build}/index.html`;
     fs.readFile( fPath, 'utf8', (err, txt)=>
-    {
-        err || fs.writeFileSync( fPath, txt.split(REF_BUILD).join(build) );
+    {   txt = txt.split(REF_BUILD).join(build)
+            .replace("document.write","0 && ")
+            .replace("<html>" ,"")
+            .replace("</html>","")
+            .replace("<body>" ,"")
+            .replace("</body>","");
+        err || fs.writeFileSync( fPath, txt );
     });
 };
 readdirSync('./build')
